@@ -5,7 +5,6 @@ var path = require('path');
 
 app.use(express.static('./app'));
 
-var IP = "localhost";
 var port = process.env.PORT || 3000
 
 app.get('/', function(req, res) {
