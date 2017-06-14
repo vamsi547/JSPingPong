@@ -1,4 +1,4 @@
-function BallCreator(parent) {
+function SVGCreator(parent) {
 	this.parent = parent;
 }
 
@@ -6,7 +6,7 @@ function BallCreator(parent) {
 //   <circle cx="25" cy="25" r="20" fill="white" style="stroke-width:3;stroke:grey;" />
 // </svg>
 
-BallCreator.prototype.createBall = function(attrs) {
+SVGCreator.prototype.createBall = function(attrs) {
 	var ballID = this.generateID();
 	var svgObj = document.createElement('svg')
 	svgObj.setAttribute('height', 50);
@@ -25,14 +25,19 @@ BallCreator.prototype.createBall = function(attrs) {
 }
 
 
-BallCreator.prototype.cloneBall = function(attrs, id) {
+SVGCreator.prototype.cloneElement = function(id) {
 	var ballID = this.generateID();
 	var svgObject =  document.getElementById(id);
-
 	var newSvgObject = svgObject.cloneNode(true);
+	newSvgObject.id = ballID;
+	return newSvgObject;
+}
+
+SVGCreator.prototype.cloneBall = function(attrs, id) {
+	var newSvgObject = this.cloneElement(id);
+
 	newSvgObject.setAttribute('height', attrs.height || 50);
 	newSvgObject.setAttribute('width', attrs.width || 50);
-	newSvgObject.id = ballID;
 
 	var circleObj = newSvgObject.getElementsByTagName('circle')[0];
 	circleObj.setAttribute('cx', attrs.cx || 25);
@@ -42,9 +47,15 @@ BallCreator.prototype.cloneBall = function(attrs, id) {
 	circleObj.setAttribute('style', attrs.circleStyle || 'stroke-width:3;stroke:grey;');	
 
 	this.parent.appendChild(newSvgObject);
-	return ballID;	
+	return newSvgObject.id;	
 }
 
-BallCreator.prototype.generateID = function() {
-	return Math.random().toString(36).substring(7);
+SVGCreator.prototype.cloneBonusBar = function(id) {
+	var newSvgObject = this.cloneElement(id);
+	this.parent.appendChild(newSvgObject);
+	return newSvgObject.id;
 }
+
+SVGCreator.prototype.generateID = function() {
+	return Math.random().toString(36).substring(7);
+}	

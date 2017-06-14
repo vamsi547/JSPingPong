@@ -12,7 +12,9 @@ var ballObj 	 = new Ball('svgBall', 'audio', container,
 					});
 
 var ballsList 	 = [{ id: 'svgBall', obj: ballObj }];
-var ballCreator  = new BallCreator(container);
+var svgCreator  = new SVGCreator(container);
+
+// initBonusBar();
 
 function getRandomInteger(min, max) {
   min = Math.ceil(min);
@@ -25,7 +27,7 @@ eventEmitter.on('level-up', function() {
 	// Creates extra Ball for each level up with variant speeds and variant sizes
 
 	var ballAttrs = balls[getRandomInteger(0, 2)];
-	var ballId = ballCreator.cloneBall(ballAttrs, 'svgBall');
+	var ballId = svgCreator.cloneBall(ballAttrs, 'svgBall');
 	var newBallObj = new Ball(ballId, 'audio', container, 
 					{
 						'barObj': barObj, 
@@ -76,3 +78,9 @@ newGame.addEventListener('click', function() {
 	// Reset Bar
 	barObj.reset();
 });
+
+function initBonusBar() {
+	var bonusBarId = svgCreator.cloneBonusBar('svgBonusBar');
+	new BonusBar(bonusBarId, container, { 'barObj': barObj, 'eventEmitter': eventEmitter })
+
+}
