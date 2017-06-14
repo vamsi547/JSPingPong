@@ -17,6 +17,11 @@
 			<svg width="10" height="20" style="position: absolute;top: 5; left: 30%; border-radius: 50px; display: none;" id="svgBonusBar">
 			  <rect width="10" height="20" style="fill:white;"/>
 			</svg>
+
+			<svg height="100" width="100" style="position: absolute; left: 10%; display: none;" id="svgBonusTimer">
+				<circle cx="50" cy="50" r="48" fill="black" style="stroke-width:3;stroke:grey;" />
+	        	<text x="51%" y="64%" id="timer-text" fill="yellow" text-anchor="middle" style="font-size: -webkit-xxx-large">60</text>
+			</svg>
 			
 			<div id="scoreboard" style="font-size: 20px;  position: absolute; right: 50px; top: 50px; height: 100px; width: 100px; color: white;">
 				Score: <span id="score">0</span>
@@ -31,6 +36,7 @@
 
 		<script src="balls-config.js"></script>
 		<script src="svg-creator.js"></script>
+		<script src="bonus-timer.js"></script>
 		<script src="bonus-bar.js"></script>
 		<script src="ball.js"></script>
 		<script src="bar.js"></script>
