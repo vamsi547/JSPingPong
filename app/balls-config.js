@@ -4,42 +4,42 @@ var balls = [
 		left : '0',
 		top : '0',
 		//dimensions - svg
-		height : 50,
-		width : 50,
+		height : 60,
+		width : 60,
 		//dimensions - circle
-		cx: 25,
-		cy: 25,
-		r: 20,
+		cx: 30,
+		cy: 30,
+		radius: 28,
 		//speed
 		steps : 1,
 		frequency : 1
 	},
 	{
 		// position
-		left : '500',
+		left : '30',
 		top : '0',
 		// dimensions - svg
-		height : 50,
-		width : 50,
+		height : 100,
+		width : 100,
 		// dimensions - circle
-		cx: 25,
-		cy: 25,
-		r: 20,
+		cx: 50,
+		cy: 50,
+		radius: 48,
 		// speed
 		steps : 1,
 		frequency : 1
 	},
 	{
 		// position
-		left : '1300',
+		left : '50',
 		top : '0',
 		// dimensions - svg
-		height : 50,
-		width : 50,
+		height : 80,
+		width : 80,
 		// dimensions - circle
-		cx: 25,
-		cy: 25,
-		r: 20,
+		cx: 40,
+		cy: 40,
+		radius: 38,
 		// speed
 		steps : 1,
 		frequency : 1

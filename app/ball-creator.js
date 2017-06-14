@@ -28,13 +28,15 @@ BallCreator.prototype.createBall = function(attrs) {
 BallCreator.prototype.cloneBall = function(attrs, id) {
 	var ballID = this.generateID();
 	var svgObject =  document.getElementById(id);
-	var newSvgObject = svgObject.cloneNode(true);	
+
+	var newSvgObject = svgObject.cloneNode(true);
 	newSvgObject.setAttribute('height', attrs.height || 50);
 	newSvgObject.setAttribute('width', attrs.width || 50);
 	newSvgObject.id = ballID;
+
 	var circleObj = newSvgObject.getElementsByTagName('circle')[0];
-	circleObj.setAttribute('cx', attrs.rx || 25);
-	circleObj.setAttribute('cy', attrs.ry || 25);
+	circleObj.setAttribute('cx', attrs.cx || 25);
+	circleObj.setAttribute('cy', attrs.cy || 25);
 	circleObj.setAttribute('r', attrs.radius || 20);
 	circleObj.setAttribute('fill', attrs.circleColor || 'white');
 	circleObj.setAttribute('style', attrs.circleStyle || 'stroke-width:3;stroke:grey;');	

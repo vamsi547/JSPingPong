@@ -9,21 +9,29 @@ var ballObj 	 = new Ball('svgBall', 'audio', container,
 						'barObj': barObj, 
 						'scoreObj': scoreObj, 
 						'eventEmitter': eventEmitter
-					}, balls[0]);
+					});
 
 var ballsList 	 = [{ id: 'svgBall', obj: ballObj }];
 var ballCreator  = new BallCreator(container);
 
+function getRandomInteger(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 // Event to Handle when level increases
 eventEmitter.on('level-up', function() {
 	// Creates extra Ball for each level up with variant speeds and variant sizes
-	var ballId = ballCreator.cloneBall({}, 'svgBall');
+
+	var ballAttrs = balls[getRandomInteger(0, 2)];
+	var ballId = ballCreator.cloneBall(ballAttrs, 'svgBall');
 	var newBallObj = new Ball(ballId, 'audio', container, 
 					{
 						'barObj': barObj, 
 						'scoreObj': scoreObj, 
 						'eventEmitter': eventEmitter
-					}, balls[1]);
+					}, ballAttrs);
 	// Increase Bar Speed for Every level Increase
 	barObj.increaseSpeed();
 	// Storing all Balls with their Ids and Objects

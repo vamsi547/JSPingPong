@@ -27,10 +27,9 @@ Bar.prototype.getBarPosition = function() {
 Bar.prototype.keyDownEventListener = function() {
 	
 	this.moveBar = function(evt) {
-
 		var currentLeft = parseInt(this.bar.style.left);
 		var diffSpace = 0;
-		if(evt.keyCode !== this.leftArrowCode && evt.keyCode !== this.rightArrowCode) {
+		if(evt.keyCode !== this.leftArrowCode && evt.keyCode !== this.rightArrowCode && !('touches' in evt)) {
 			return;
 		} 
 		else if(evt.keyCode === this.leftArrowCode) {
