@@ -38,7 +38,8 @@ function initBonusBar() {
 		if(isGameOver)
 			return;
 		bonusBarId = svgCreator.cloneBonusBar('svgBonusBar');
-		bonusBarObj = new BonusBar(bonusBarId, container, { 'barObj': barObj, 'eventEmitter': eventEmitter });		
+		var bonusBarLeft = bonusBarPosition[getRandomInteger(0, 4)];
+		bonusBarObj = new BonusBar(bonusBarId, container, { 'barObj': barObj, 'eventEmitter': eventEmitter }, { 'left': bonusBarLeft});		
 	}, 1000 * showBonusInterval);
 }
 

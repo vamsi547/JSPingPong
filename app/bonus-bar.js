@@ -1,9 +1,10 @@
-function BonusBar(bonusBarId, container, deps) {
+function BonusBar(bonusBarId, container, deps, attrs) {
 	this.bonusBar = document.getElementById(bonusBarId);
 	this.rect = this.bonusBar.getElementsByTagName('rect')[0];
 	this.container = container;
 	this.barObj = deps.barObj;
 	this.eventEmitter = deps.eventEmitter;
+	this.attrs = attrs || {};
 	this.setup();
 	this.moveBonusBar();
 }
@@ -12,6 +13,7 @@ BonusBar.prototype.setup = function() {
 	// Initialize Bonus Bar
 	this.bonusBar.style.display = 'block';
 	this.bonusBar.style.top = '0';
+	this.bonusBar.style.left = this.attrs.left || '10';
 	this.bonusBarHeight = 20;
 	this.bonusBarWidth = 10;
 	this.stepsToMove = 0.8;
