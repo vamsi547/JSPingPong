@@ -38,7 +38,7 @@ function initBonusBar() {
 		if(isGameOver)
 			return;
 		bonusBarId = svgCreator.cloneBonusBar('svgBonusBar');
-		var bonusBarLeft = bonusBarPosition[getRandomInteger(0, 4)];
+		var bonusBarLeft = bonusBarPosition[getRandomInteger(0, bonusBarPosition.length - 1)];
 		bonusBarObj = new BonusBar(bonusBarId, container, { 'barObj': barObj, 'eventEmitter': eventEmitter }, { 'left': bonusBarLeft});		
 	}, 1000 * showBonusInterval);
 }
@@ -125,6 +125,8 @@ eventEmitter.on('game-over', function() {
 
 eventEmitter.on('bonus-time-out', function(args) {
 	timerObject.removeTimer();
+	if(isGameOver)
+		return;
 	if(args && args.bonusType && (args.bonusType === 'half-bar' || args.bonusType === 'double-bar')) {
 		barObj.restoreBar();
 	}

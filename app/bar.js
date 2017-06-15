@@ -72,6 +72,22 @@ Bar.prototype.updateBarLength = function(length) {
 		this.barLength = length;
 	this.bar.style.width = this.barLength;
 	this.rect.style.width = this.barLength;
+	this.adjustBarPosition();
+}
+
+/*
+	Case : Bar at extreme right and Catches Bonus point that doubles the size
+	Result : Bar extends beyond container as it doubles
+	Solution: Adjust Bar's left such that it fits to the container at its right end
+*/
+Bar.prototype.adjustBarPosition = function() {
+	var currentLeft = this.bar.style.left;
+	var containerWidth = this.container.clientWidth;
+	var barOverflow = currentLeft + this.barLength - containerWidth;
+	// Check currentleft > baroverflow  needed in lower resolutions
+	if(barOverflow > 0 && currentLeft > barOverflow) {
+		this.bar.style.left = currentLeft - (barOverflow);
+	}
 }
 
 Bar.prototype.doubleBar = function() {
