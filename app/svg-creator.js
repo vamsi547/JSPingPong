@@ -26,10 +26,9 @@ SVGCreator.prototype.createBall = function(attrs) {
 
 
 SVGCreator.prototype.cloneElement = function(id) {
-	var ballID = this.generateID();
 	var svgObject =  document.getElementById(id);
 	var newSvgObject = svgObject.cloneNode(true);
-	newSvgObject.id = ballID;
+	newSvgObject.id = this.generateID();
 	return newSvgObject;
 }
 

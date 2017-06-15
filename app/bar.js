@@ -1,5 +1,6 @@
 function Bar(barID, container) {
 	this.bar = document.getElementById(barID);
+	this.rect = this.bar.getElementsByTagName('rect')[0];
 	this.container = container;
 	this.setup();
 }
@@ -10,7 +11,8 @@ Bar.prototype.setup = function() {
 
 	this.bar.style.left = '0';	
 	this.stepsToMove = 40;
-	this.barLength = 300;
+	this.defaultBarLength = 300;
+	this.barLength = this.defaultBarLength;
 
 	// key stroke codes
 	this.leftArrowCode = 37;
@@ -63,6 +65,27 @@ Bar.prototype.keyDownEventRemover = function() {
 
 Bar.prototype.increaseSpeed = function() {
 	this.stepsToMove += 10;
+}
+
+Bar.prototype.updateBarLength = function(length) {
+	if(length)
+		this.barLength = length;
+	this.bar.style.width = this.barLength;
+	this.rect.style.width = this.barLength;
+}
+
+Bar.prototype.doubleBar = function() {
+	this.barLength *= 2;
+	this.updateBarLength();
+}
+
+Bar.prototype.halfBar = function() {
+	this.barLength /= 2;	
+	this.updateBarLength();
+}
+
+Bar.prototype.restoreBar = function() {
+	this.updateBarLength(this.defaultBarLength	);
 }
 
 Bar.prototype.gameOver = function() {

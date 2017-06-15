@@ -3,8 +3,14 @@ function BonusTimer(id, timerId, countdown, deps) {
 	this.timer = this.bonusTimer.getElementById(timerId);
 	this.countdown = countdown;
 	this.eventEmitter = deps.eventEmitter;
+	this.bonusType = deps.bonusType;
 	this.setTimer();
 }
+
+/*
+	Displays Bonus Timer Countdown
+	- When Bonus start effect
+*/
 
 BonusTimer.prototype.setTimer = function() {
 	this.bonusTimer.style.display = 'block';
@@ -14,11 +20,18 @@ BonusTimer.prototype.setTimer = function() {
 		this.timer.textContent = --limit;
 		if(limit < 0) {			
 			clearInterval(this.timerInterval);
-			this.eventEmitter.emit('bonus-time-out');
+			// Send Bonus type to do respective action to restore normal state
+			this.eventEmitter.emit('bonus-time-out', { 'bonusType': this.bonusType});
 		}		
 	}.bind(this), 1000);
 }
 
+
+/*
+	Removes Timer from Display 
+	- When Bonus time is finished
+	- When Game is Over
+*/
 BonusTimer.prototype.removeTimer = function() {
 	this.timer.textContent = this.countdown;
 	this.bonusTimer.style.display = 'none';
