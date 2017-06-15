@@ -87,9 +87,11 @@ Ball.prototype.moveBall = function() {
 		if(!topCheck && !leftCheck && !rightCheck && !upwards) {
 			// Hit the bar 
 			// Reverse the direction, Increase Score
+			leftOperator = changeDirection(barPosition, ballPosition, leftOperator);
 			this.audio.play();
 			this.scoreObj.updateScore();
 			upwards = true;
+
 			return;
 		}
 
@@ -101,6 +103,21 @@ Ball.prototype.moveBall = function() {
 
 	}.bind(this), this.frequency);
 
+}
+
+var changeDirection = function(barPosition, ballPosition, leftOperator) {
+	var barMid = (barPosition.left + barPosition.right) / 2;
+	var ballMid = (ballPosition.left + ballPosition.right) / 2;
+	if(ballMid < (barPosition.left + (barMid-barPosition.left)/4)) {
+		// Go left
+		return '-';
+	} else if(ballMid > (barMid + (barPosition.right-barMid)/4)) {
+		// Go Right
+		return '+';
+	} else {
+		// Go Opposite direction
+		return leftOperator;
+	}
 }
 
 Ball.prototype.gameOver = function() {
