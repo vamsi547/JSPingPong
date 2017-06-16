@@ -1,5 +1,6 @@
 function Ball(ballID, audioID, container, deps, attrs) {
 	this.ball = document.getElementById(ballID);
+	this.circle = this.ball.getElementsByTagName('circle')[0];
 	this.audio = document.getElementById(audioID);
 	this.container = container;
 	this.barObj = deps.barObj;
@@ -17,8 +18,10 @@ Ball.prototype.setup = function() {
 	this.glitchHeight = 0;
 	this.ballHeight = this.attrs.height || 50;
 	this.ballWidth = this.attrs.width || 50;
-	this.stepsToMove = this.attrs.steps || 1; // Float type
+	this.stepsToMove = this.attrs.steps || 4; // Float type
 	this.frequency = this.attrs.frequency || 1;
+	this.type = this.attrs.type || 'normal';
+	this.colors = this.attrs.colors || ['red', 'blue', 'green'];
 	this.bounceInterval = null;
 }
 
@@ -31,7 +34,7 @@ Ball.prototype.moveBall = function() {
 	var topOperator = '+';
 	var upwards = false;
 	
-	this.bounceInterval = setInterval(function() {
+	function ballAnimate() {
 		var currentLeft = parseFloat(this.ball.style.left);
 		var currentTop = parseFloat(this.ball.style.top);
 		var diffSpaceLR = 0;
@@ -77,6 +80,11 @@ Ball.prototype.moveBall = function() {
 		this.ball.style.left = '' + eval(newLeft) - diffSpaceLR;
 		this.ball.style.top = '' + eval(newTop) - diffSpaceTB;
 
+		// Update colors if Ball is Bonus type
+		if(this.type === 'bonus')
+			this.circle.style.fill = this.colors[getRandomInteger(0, 3)];
+
+
 		var barPosition = this.barObj.getBarPosition();
 		var ballPosition = this.ball.getBoundingClientRect();
 
@@ -91,17 +99,24 @@ Ball.prototype.moveBall = function() {
 			this.audio.play();
 			this.scoreObj.updateScore();
 			upwards = true;
-
+			this.bounceInterval = requestAnimationFrame(ballAnimate.bind(this));
 			return;
 		}
 
 		// If Ball Hits the Ground  - Game Over
 		if(currentTop + this.ballHeight >= this.container.clientHeight && (leftCheck || rightCheck) && !upwards) {
-			this.eventEmitter.emit('game-over');			
+			if(this.type === 'bonus') {
+				this.eventEmitter.emit('bonus-ball-miss', {ballID: this.ball.id});
+			} else {
+				this.eventEmitter.emit('game-over');
+			}
 			return;
 		}
 
-	}.bind(this), this.frequency);
+		this.bounceInterval = requestAnimationFrame(ballAnimate.bind(this));
+	};
+
+	this.bounceInterval = requestAnimationFrame(ballAnimate.bind(this))
 
 }
 
@@ -125,7 +140,7 @@ Ball.prototype.gameOver = function() {
 }
 
 Ball.prototype.clearBounceInterval = function(interval) {
-	clearInterval(interval);
+	cancelAnimationFrame(interval || this.bounceInterval);
 }
 
 Ball.prototype.reset = function() {

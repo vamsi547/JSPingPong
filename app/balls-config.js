@@ -11,7 +11,7 @@ var balls = [
 		cy: 30,
 		radius: 28,
 		//speed
-		steps : 1,
+		steps : 4,
 		frequency : 1
 	},
 	{
@@ -26,7 +26,7 @@ var balls = [
 		cy: 50,
 		radius: 48,
 		// speed
-		steps : 1,
+		steps : 4,
 		frequency : 1
 	},
 	{
@@ -41,7 +41,7 @@ var balls = [
 		cy: 40,
 		radius: 38,
 		// speed
-		steps : 1,
+		steps : 4,
 		frequency : 1
 	}
 

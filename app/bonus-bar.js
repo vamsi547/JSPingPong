@@ -16,19 +16,17 @@ BonusBar.prototype.setup = function() {
 	this.bonusBar.style.left = this.attrs.left || '10';
 	this.bonusBarHeight = 20;
 	this.bonusBarWidth = 10;
-	this.stepsToMove = 0.8;
+	this.stepsToMove = 1;
 	this.frequency = 10;
 	this.colors = ['red', 'blue', 'green', 'white'];
 }
 
 BonusBar.prototype.moveBonusBar = function() {
-	this.moveForwardInterval = setInterval(function() {
-		var currentTop = parseFloat(this.bonusBar.style.top);
-		if(currentTop + this.bonusBarHeight >= this.container.clientHeight) {
-			this.eventEmitter.
-			return;
-		}
+	
+	function animateBonusBar() {
+		var currentTop = parseFloat(this.bonusBar.style.top);		
 		var newTop = currentTop + this.stepsToMove;
+
 		this.bonusBar.style.top = eval('' +  newTop);
 		this.rect.style.fill = this.colors[getRandomInteger(0, 3)];
 		
@@ -50,12 +48,13 @@ BonusBar.prototype.moveBonusBar = function() {
 		if(currentTop + this.bonusBarHeight >= this.container.clientHeight && (leftCheck || rightCheck)) {
 			this.stopBonusMoveForwardInterval();
 			this.eventEmitter.emit('bonus-bar-miss');
-			return;
 		}
+		this.moveForwardInterval = requestAnimationFrame(animateBonusBar.bind(this));
+	};
+	this.moveForwardInterval = requestAnimationFrame(animateBonusBar.bind(this));
 
-	}.bind(this), this.frequency);
 }
 
 BonusBar.prototype.stopBonusMoveForwardInterval = function() {
-	clearInterval(this.moveForwardInterval);
+	cancelAnimationFrame(this.moveForwardInterval)
 }

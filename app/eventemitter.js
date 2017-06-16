@@ -3,7 +3,6 @@ function EventEmitter() {
 }
 
 EventEmitter.prototype.emit = function(event, args) {
-	// emit('eventname', arguments)
 	// execute all callbacks registered with this event
 	if(!this.events[event])
 		return;

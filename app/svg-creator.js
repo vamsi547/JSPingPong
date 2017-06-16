@@ -2,29 +2,6 @@ function SVGCreator(parent) {
 	this.parent = parent;
 }
 
-// <svg width="50" height="50" id="svgBall">
-//   <circle cx="25" cy="25" r="20" fill="white" style="stroke-width:3;stroke:grey;" />
-// </svg>
-
-SVGCreator.prototype.createBall = function(attrs) {
-	var ballID = this.generateID();
-	var svgObj = document.createElement('svg')
-	svgObj.setAttribute('height', 50);
-	svgObj.setAttribute('width', 50);
-	svgObj.setAttribute('id', ballID);
-	var circleObj = document.createElement('circle');
-	circleObj.setAttribute('cx', 25);
-	circleObj.setAttribute('cy', 25);
-	circleObj.setAttribute('r', 20);
-	circleObj.setAttribute('fill', 'white');
-	circleObj.setAttribute('style', 'stroke-width:3;stroke:grey;');
-
-	svgObj.appendChild(circleObj);
-	this.parent.appendChild(svgObj);
-	return ballID;
-}
-
-
 SVGCreator.prototype.cloneElement = function(id) {
 	var svgObject =  document.getElementById(id);
 	var newSvgObject = svgObject.cloneNode(true);

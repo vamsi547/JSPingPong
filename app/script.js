@@ -1,26 +1,27 @@
-var container 	 = document.getElementById('container');
-var newGame 	 = document.getElementById('newgame')
-var eventEmitter = new EventEmitter();
+var container 	  = document.getElementById('container');
+var newGame 	  = document.getElementById('newgame')
+var eventEmitter  = new EventEmitter();
 
-var barObj 		 = new Bar('svgBar', container);
-var scoreObj 	 = new ScoreBoard('score', 'level', {'eventEmitter': eventEmitter});
-var ballObj 	 = new Ball('svgBall', 'audio', container, 
+var barObj 		  = new Bar('svgBar', container);
+var scoreObj 	  = new ScoreBoard('score', 'level', {'eventEmitter': eventEmitter});
+var ballObj 	  = new Ball('svgBall', 'audio', container, 
 					{
 						'barObj': barObj, 
 						'scoreObj': scoreObj, 
 						'eventEmitter': eventEmitter
 					});
 
-var ballsList 	 = [{ id: 'svgBall', obj: ballObj }];
-var svgCreator   = new SVGCreator(container);
+var ballsList 	  = [{ id: 'svgBall', obj: ballObj }];
+var svgCreator    = new SVGCreator(container);
 
 var timerObject   = null;
 var bonusBarId    = null;
 var bonusBarObj	  = null;
+var bonusBallObj  = null;
 var bonusInterval = null;
 
-var bonusLength	      = 5;
-var showBonusInterval = bonusLength * 3;
+var bonusLength	      = 20;
+var showBonusInterval = 5;
 
 var isGameOver = false;
 
@@ -35,7 +36,7 @@ function getRandomInteger(min, max) {
 function initBonusBar() {
 	clearTimeout(bonusInterval);
 	bonusInterval = setTimeout(function() {
-		if(isGameOver)
+		if(isGameOver)			
 			return;
 		bonusBarId = svgCreator.cloneBonusBar('svgBonusBar');
 		var bonusBarLeft = bonusBarPosition[getRandomInteger(0, bonusBarPosition.length - 1)];
@@ -44,6 +45,9 @@ function initBonusBar() {
 }
 
 function removeBonusBar() {
+	if(!bonusBarId) {
+		return;
+	}
 	// Remove Bonus bar from DOM
 	document.getElementById(bonusBarId).remove();
 	bonusBarId = null;
@@ -65,6 +69,16 @@ function stopBonusBarOnGameOver() {
 		removeBonusBar();		
 	}	
 	clearTimeout(bonusInterval);
+}
+
+/*
+	Stop Bonus Ball Movement Interval
+
+*/
+function stopBonusBallsOnGameOver() {
+	if(!bonusBallObj)
+		return;
+	bonusBallObj.stopBonusBallsInterval();
 }
 
 /* Event to Handle when level increases
@@ -101,6 +115,7 @@ eventEmitter.on('level-up-1', function() {
 	- Stop the Balls	
 	- Stop the Bar
 	- Stop the Bonus Bar
+	- Stop the Bonus Balls
 	- Display New Game Button
 	- Blur the page - TODO
 */
@@ -115,6 +130,8 @@ eventEmitter.on('game-over', function() {
 	barObj.gameOver();
 
 	stopBonusBarOnGameOver();
+
+	stopBonusBallsOnGameOver();
 	
 	newGame.style.display = 'block';	
 });
@@ -129,6 +146,10 @@ eventEmitter.on('bonus-time-out', function(args) {
 		return;
 	if(args && args.bonusType && (args.bonusType === 'half-bar' || args.bonusType === 'double-bar')) {
 		barObj.restoreBar();
+	}
+	if(args && args.bonusType && args.bonusType === 'multiple-balls') {
+		bonusBallObj.removeAllBonusBalls();
+		bonusBallObj = null;
 	}
 	initBonusBar();
 });
@@ -148,6 +169,15 @@ eventEmitter.on('bonus-effect', function() {
 			// Double the Bar Length
 			barObj.doubleBar();
 			break;
+		case 'multiple-balls':
+			bonusBallObj = new BonusBalls(5, 3000, container, 
+					{
+						'barObj': barObj, 
+						'scoreObj': scoreObj, 
+						'eventEmitter': eventEmitter,
+						'svgCreator': svgCreator
+					});
+			break;
 	}
 
 	timerObject = new BonusTimer('svgBonusTimer', 'timer-text', bonusLength, { 'eventEmitter': eventEmitter, 'bonusType': bonusType });
@@ -155,6 +185,16 @@ eventEmitter.on('bonus-effect', function() {
 	// Remove Bonus bar from DOM
 	removeBonusBar()
 
+});
+
+// Bonus Ball Miss
+
+eventEmitter.on('bonus-ball-miss', function(args) {
+	var ballID = args.ballID;
+	if(!bonusBallObj || !ballID)
+		return;
+	// Remove Bonus Ball that missed the Bar	
+	bonusBallObj.removeBonusBall(ballID);
 });
 
 // Bonus Bar Miss
@@ -173,6 +213,7 @@ eventEmitter.on('bonus-bar-miss', function() {
    - Remove all the Balls and retain only primary ball
    - Updates ballslist with primary ball
    - Reset Ball - Only first ball as Initial state is One Ball
+   - Remove Bonus Balls if any
    - Reset Bar
    - Restart Bonus Bar
 */
@@ -192,6 +233,10 @@ newGame.addEventListener('click', function() {
 	ballsList = ballsList.splice(0, 1);
 	
 	ballsList[0].obj.reset();
+
+	if(bonusBallObj) {
+		bonusBallObj.removeAllBonusBalls();
+	}
 	
 	barObj.reset();
 

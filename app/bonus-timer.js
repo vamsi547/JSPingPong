@@ -33,6 +33,7 @@ BonusTimer.prototype.setTimer = function() {
 	- When Game is Over
 */
 BonusTimer.prototype.removeTimer = function() {
+	clearInterval(this.timerInterval);
 	this.timer.textContent = this.countdown;
 	this.bonusTimer.style.display = 'none';
 };

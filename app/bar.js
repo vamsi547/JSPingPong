@@ -13,7 +13,8 @@ Bar.prototype.setup = function() {
 	this.stepsToMove = 40;
 	this.defaultBarLength = 300;
 	this.barLength = this.defaultBarLength;
-
+	//Update Bar length if Previous game has diff length
+	this.updateBarLength();
 	// key stroke codes
 	this.leftArrowCode = 37;
 	this.rightArrowCode = 39;
