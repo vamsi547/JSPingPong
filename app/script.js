@@ -44,10 +44,7 @@ function initBonusBar() {
 	}, 1000 * showBonusInterval);
 }
 
-function removeBonusBar() {
-	if(!bonusBarId) {
-		return;
-	}
+function removeBonusBar() {	
 	// Remove Bonus bar from DOM
 	document.getElementById(bonusBarId).remove();
 	bonusBarId = null;

@@ -48,6 +48,7 @@ BonusBar.prototype.moveBonusBar = function() {
 		if(currentTop + this.bonusBarHeight >= this.container.clientHeight && (leftCheck || rightCheck)) {
 			this.stopBonusMoveForwardInterval();
 			this.eventEmitter.emit('bonus-bar-miss');
+			return;
 		}
 		this.moveForwardInterval = requestAnimationFrame(animateBonusBar.bind(this));
 	};
