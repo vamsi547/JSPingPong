@@ -87,6 +87,8 @@ eventEmitter.on('bonus-effect', function() {
 			barObj.doubleBar();
 			break;
 		case 'multiple-balls':
+			// Generate Multiple Bonus balls till the time out 
+			// Balls - 5 , Interval to generate Balls - 3 sec
 			bonusBallObj = new BonusBalls(5, 3000, container, 
 					{
 						'barObj': barObj, 
@@ -104,26 +106,28 @@ eventEmitter.on('bonus-effect', function() {
 
 });
 
-// Bonus Ball Miss
-
+/* Bonus Ball Miss
+   - Remove Bonus Ball that missed the Bar		
+*/
 eventEmitter.on('bonus-ball-miss', function(args) {
 	var ballID = args.ballID;
 	if(!bonusBallObj || !ballID)
-		return;
-	// Remove Bonus Ball that missed the Bar	
+		return;	
 	bonusBallObj.removeBonusBall(ballID);
 });
 
-// Bonus Bar Miss
-
+/* Bonus Bar Miss
+   - Remove Bonus bar from DOM
+   - Initialise Bonus Bar
+*/
 eventEmitter.on('bonus-bar-miss', function() {
-	// Remove Bonus bar from DOM
+	
 	removeBonusBar();
-	// Initialise Bonus Bar
+	
 	initBonusBar();
 });
 
-/* Event to create New Game
+/* Events to create New Game ( On click of New Game or Space bar key stroke)
    - Set isGameOver state as false
    - Hide New Game Button	
    - Reset Score board and levels
@@ -134,28 +138,10 @@ eventEmitter.on('bonus-bar-miss', function() {
    - Reset Bar
    - Restart Bonus Bar
 */
-newGame.addEventListener('click', function() {
-	
-	isGameOver = false; 
+newGame.addEventListener('click', startNewGame);
 
-	newGame.style.display = 'none';
-	
-	scoreObj.reset();
-	
-	ballsList.splice(1).forEach(function(ball) {
-		var ballElement = document.getElementById(ball.id);
-		ballElement.remove();
-	});
-	
-	ballsList = ballsList.splice(0, 1);
-	
-	ballsList[0].obj.reset();
-
-	if(bonusBallObj) {
-		bonusBallObj.removeAllBonusBalls();
+document.addEventListener('keydown', function(evt) {
+	if(evt.keyCode === 32 && isGameOver) {
+		startNewGame();
 	}
-	
-	barObj.reset();
-
-	initBonusBar();
-});
+})

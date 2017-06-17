@@ -78,3 +78,28 @@ function stopBonusBallsOnGameOver() {
 	bonusBallObj.stopBonusBallsInterval();
 }
 
+function startNewGame() {
+	
+	isGameOver = false; 
+
+	newGame.style.display = 'none';
+	
+	scoreObj.reset();
+	
+	ballsList.splice(1).forEach(function(ball) {
+		var ballElement = document.getElementById(ball.id);
+		ballElement.remove();
+	});
+	
+	ballsList = ballsList.splice(0, 1);
+	
+	ballsList[0].obj.reset();
+
+	if(bonusBallObj) {
+		bonusBallObj.removeAllBonusBalls();
+	}
+	
+	barObj.reset();
+
+	initBonusBar();
+}
