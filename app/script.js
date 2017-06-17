@@ -103,3 +103,20 @@ function startNewGame() {
 
 	initBonusBar();
 }
+
+function gameOver() {
+	
+	isGameOver = true;
+
+	ballsList.forEach(function(ball) {
+		ball.obj.gameOver();
+	});
+	
+	barObj.gameOver();
+
+	stopBonusBarOnGameOver();
+
+	stopBonusBallsOnGameOver();
+	
+	newGame.style.display = 'block';	
+}

@@ -19,14 +19,6 @@ eventEmitter.on('level-up', function() {
 	ballsList.push({ id: ballId, obj: newBallObj });
 });
 
-/* Event to Handle when level increases
-   - Increase Ball Speed for Every level Increase
-*/
-eventEmitter.on('level-up-1', function() {
-	ballsList[0].obj.increaseSpeed();
-	barObj.increaseSpeed();
-});
-
 /* Event to handle when game ends
 	- Set isGameOver state as true
 	- Stop the Balls	
@@ -36,22 +28,7 @@ eventEmitter.on('level-up-1', function() {
 	- Display New Game Button
 	- Blur the page - TODO
 */
-eventEmitter.on('game-over', function() {
-	
-	isGameOver = true;
-
-	ballsList.forEach(function(ball) {
-		ball.obj.gameOver();
-	});
-	
-	barObj.gameOver();
-
-	stopBonusBarOnGameOver();
-
-	stopBonusBallsOnGameOver();
-	
-	newGame.style.display = 'block';	
-});
+eventEmitter.on('game-over', gameOver);
 
 /* Bonus Time out 
    - Restart Bonus Bar 
@@ -127,7 +104,7 @@ eventEmitter.on('bonus-bar-miss', function() {
 	initBonusBar();
 });
 
-/* Events to create New Game ( On click of New Game or Space bar key stroke)
+/* Event to create New Game ( On click of New Game )
    - Set isGameOver state as false
    - Hide New Game Button	
    - Reset Score board and levels
@@ -140,8 +117,17 @@ eventEmitter.on('bonus-bar-miss', function() {
 */
 newGame.addEventListener('click', startNewGame);
 
+/*
+	Keyboard Shortucts
+	- Space bar => New Game
+	- ESC Key   => Stop Game
+*/
+
 document.addEventListener('keydown', function(evt) {
 	if(evt.keyCode === 32 && isGameOver) {
 		startNewGame();
+	}
+	if(evt.keyCode === 27 && !isGameOver) {
+		gameOver();
 	}
 })
