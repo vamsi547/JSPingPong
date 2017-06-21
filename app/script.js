@@ -3,17 +3,18 @@ var newGame 	  = document.getElementById('newgame')
 var eventEmitter  = new EventEmitter();
 
 var barObj 		  = new Bar('svgBar', container);
+var svgCreator    = new SVGCreator(container);
+var bricks        = new Bricks('svgBrick', container, { svgCreator: svgCreator });
 var scoreObj 	  = new ScoreBoard('score', 'level', {'eventEmitter': eventEmitter});
 var ballObj 	  = new Ball('svgBall', 'audio', container, 
 					{
 						'barObj': barObj, 
+						'bricks': bricks,
 						'scoreObj': scoreObj, 
 						'eventEmitter': eventEmitter
 					});
 
 var ballsList 	  = [{ id: 'svgBall', obj: ballObj }];
-var svgCreator    = new SVGCreator(container);
-var bricksList    = new Bricks('svgBrick', container, { svgCreator: svgCreator });
 
 var timerObject   = null;
 var bonusBarId    = null;

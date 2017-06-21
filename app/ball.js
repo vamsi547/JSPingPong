@@ -4,6 +4,7 @@ function Ball(ballID, audioID, container, deps, attrs) {
 	this.audio = document.getElementById(audioID);
 	this.container = container;
 	this.barObj = deps.barObj;
+	this.bricks = deps.bricks;
 	this.scoreObj = deps.scoreObj;	
 	this.eventEmitter = deps.eventEmitter;
 	this.attrs = attrs || {};
@@ -80,6 +81,10 @@ Ball.prototype.moveBall = function() {
 		this.ball.style.left = '' + eval(newLeft) - diffSpaceLR;
 		this.ball.style.top = '' + eval(newTop) - diffSpaceTB;
 
+		var newPositionsIfBrickHit = this.checkForBricks(leftOperator, topOperator);
+		leftOperator = newPositionsIfBrickHit.leftOperator;
+		topOperator  = newPositionsIfBrickHit.topOperator;
+
 		// Update colors if Ball is Bonus type
 		if(this.type === 'bonus')
 			this.circle.style.fill = this.colors[getRandomInteger(0, 3)];
@@ -132,6 +137,33 @@ var changeDirection = function(barPosition, ballPosition, leftOperator) {
 	} else {
 		// Go Opposite direction
 		return leftOperator;
+	}
+}
+
+Ball.prototype.checkForBricks = function(leftOperator, topOperator) {
+
+	var bricksList = this.bricks.bricksList;
+	for(var brickCount = 0; brickCount < bricksList.length; brickCount++) {
+		var brick = bricksList[brickCount];
+		var brickObj = document.getElementById(brick.id);
+		if(!brickObj) 
+			continue;
+		var bricksPosition = brick.obj.getBoundingClientRect();
+		var ballPosition = this.ball.getBoundingClientRect();
+		var topCheck = ballPosition.top  > bricksPosition.top;
+		var leftCheck = ballPosition.left + this.ballWidth < bricksPosition.left;
+		var rightCheck = ((ballPosition.left + ballPosition.right)/2 )> bricksPosition.right;
+		if(!topCheck && !leftCheck && !rightCheck) {
+			leftOperator = (leftOperator === '+')? '-': '+';
+			topOperator =  '+';
+			brick.obj.remove();
+			break;
+		}
+	}
+	
+	return {
+		leftOperator: leftOperator,
+		topOperator: topOperator
 	}
 }
 
