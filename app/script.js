@@ -13,6 +13,7 @@ var ballObj 	  = new Ball('svgBall', 'audio', container,
 
 var ballsList 	  = [{ id: 'svgBall', obj: ballObj }];
 var svgCreator    = new SVGCreator(container);
+var bricksList    = new Bricks('svgBrick', container, { svgCreator: svgCreator });
 
 var timerObject   = null;
 var bonusBarId    = null;
@@ -34,6 +35,8 @@ function getRandomInteger(min, max) {
 }
 
 function initBonusBar() {
+	// Adding return to stop Bonus ball - temporarily
+	return;
 	clearTimeout(bonusInterval);
 	bonusInterval = setTimeout(function() {
 		if(isGameOver)			

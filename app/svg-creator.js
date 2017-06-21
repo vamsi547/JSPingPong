@@ -32,6 +32,13 @@ SVGCreator.prototype.cloneBonusBar = function(id) {
 	return newSvgObject.id;
 }
 
+SVGCreator.prototype.cloneBrick = function(id) {
+	var newSvgObject = this.cloneElement(id);
+	newSvgObject.style.display = 'block'
+	this.parent.appendChild(newSvgObject);
+	return newSvgObject.id;
+}
+
 SVGCreator.prototype.generateID = function() {
 	return Math.random().toString(36).substring(7);
 }	

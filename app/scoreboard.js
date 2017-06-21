@@ -33,7 +33,8 @@ ScoreBoard.prototype.updateLevel = function(initialize) {
 		this.level++;
 	this.steps = this.levelToStepsMap[this.level];
 	this.levelboard.textContent = this.level;
-	if(!initialize)
+	// Adding false to stop level up - temporarily
+	if(false && !initialize)
 		this.eventEmitter.emit('level-up');
 }
 
