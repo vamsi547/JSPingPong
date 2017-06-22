@@ -71,6 +71,7 @@ eventEmitter.on('bonus-effect', function() {
 					{
 						'barObj': barObj, 
 						'scoreObj': scoreObj, 
+						'bricks': bricks,
 						'eventEmitter': eventEmitter,
 						'svgCreator': svgCreator
 					});
