@@ -12,8 +12,8 @@ function BonusBar(bonusBarId, container, deps, attrs) {
 BonusBar.prototype.setup = function() {
 	// Initialize Bonus Bar
 	this.bonusBar.style.display = 'block';
-	this.bonusBar.style.top = '0';
-	this.bonusBar.style.left = this.attrs.left || '10';
+	this.bonusBar.style.top = '0px';
+	this.bonusBar.style.left = this.attrs.left + 'px' || '10px';
 	this.bonusBarHeight = 20;
 	this.bonusBarWidth = 10;
 	this.stepsToMove = 1;
@@ -27,7 +27,7 @@ BonusBar.prototype.moveBonusBar = function() {
 		var currentTop = parseFloat(this.bonusBar.style.top);		
 		var newTop = currentTop + this.stepsToMove;
 
-		this.bonusBar.style.top = eval('' +  newTop);
+		this.bonusBar.style.top = eval('' +  newTop) + 'px';
 		this.rect.style.fill = this.colors[getRandomInteger(0, 3)];
 		
 		var barPosition = this.barObj.getBarPosition();

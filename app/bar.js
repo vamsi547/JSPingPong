@@ -9,7 +9,7 @@ Bar.prototype.setup = function() {
 
 	var barOperator = '+';
 
-	this.bar.style.left = '0';	
+	this.bar.style.left = '0px';	
 	this.stepsToMove = 40;
 	this.defaultBarLength = 300;
 	this.barLength = this.defaultBarLength;
@@ -53,7 +53,7 @@ Bar.prototype.keyDownEventListener = function() {
 
 		var newBarLeft = currentLeft + barOperator + this.stepsToMove;
 
-		this.bar.style.left = eval('' + newBarLeft)  - diffSpace;
+		this.bar.style.left = eval('' + newBarLeft)  - diffSpace + 'px';
 
 	}.bind(this);
 
@@ -71,8 +71,8 @@ Bar.prototype.increaseSpeed = function() {
 Bar.prototype.updateBarLength = function(length) {
 	if(length)
 		this.barLength = length;
-	this.bar.style.width = this.barLength;
-	this.rect.style.width = this.barLength;
+	this.bar.style.width = this.barLength + 'px';
+	this.rect.style.width = this.barLength + 'px';
 	this.adjustBarPosition();
 }
 
@@ -82,12 +82,12 @@ Bar.prototype.updateBarLength = function(length) {
 	Solution: Adjust Bar's left such that it fits to the container at its right end
 */
 Bar.prototype.adjustBarPosition = function() {
-	var currentLeft = this.bar.style.left;
+	var currentLeft = parseInt(this.bar.style.left);
 	var containerWidth = this.container.clientWidth;
 	var barOverflow = currentLeft + this.barLength - containerWidth;
 	// Check currentleft > baroverflow  needed in lower resolutions
 	if(barOverflow > 0 && currentLeft > barOverflow) {
-		this.bar.style.left = currentLeft - (barOverflow);
+		this.bar.style.left = currentLeft - (barOverflow) + 'px';
 	}
 }
 

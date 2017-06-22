@@ -15,7 +15,7 @@ function Ball(ballID, audioID, container, deps, attrs) {
 Ball.prototype.setup = function() {
 	this.ball.style.position = "absolute";
 	this.ball.style.left = this.attrs.left || '0';
-	this.ball.style.top = this.attrs.top || '300';
+	this.ball.style.top = this.attrs.top || '300px';
 	this.glitchHeight = 0;
 	this.ballHeight = this.attrs.height || 50;
 	this.ballWidth = this.attrs.width || 50;
@@ -78,8 +78,8 @@ Ball.prototype.moveBall = function() {
 		var newLeft = '' + currentLeft + leftOperator + this.stepsToMove;
 		var newTop = '' + currentTop + topOperator + this.stepsToMove;
 
-		this.ball.style.left = '' + eval(newLeft) - diffSpaceLR;
-		this.ball.style.top = '' + eval(newTop) - diffSpaceTB;
+		this.ball.style.left = '' + eval(newLeft) - diffSpaceLR + 'px';
+		this.ball.style.top = '' + eval(newTop) - diffSpaceTB + 'px';
 
 		var newPositionsIfBrickHit = this.checkForBricks(leftOperator, topOperator);
 		leftOperator = newPositionsIfBrickHit.leftOperator;
