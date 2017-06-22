@@ -10,7 +10,7 @@ Bar.prototype.setup = function() {
 	var barOperator = '+';
 
 	this.bar.style.left = '0px';	
-	this.stepsToMove = 40;
+	this.stepsToMove = 150;
 	this.defaultBarLength = 300;
 	this.barLength = this.defaultBarLength;
 	//Update Bar length if Previous game has diff length
