@@ -15,7 +15,7 @@ function Ball(ballID, audioID, container, deps, attrs) {
 Ball.prototype.setup = function() {
 	this.ball.style.position = "absolute";
 	this.ball.style.left = this.attrs.left || '0';
-	this.ball.style.top = this.attrs.right || '0';
+	this.ball.style.top = this.attrs.top || '300';
 	this.glitchHeight = 0;
 	this.ballHeight = this.attrs.height || 50;
 	this.ballWidth = this.attrs.width || 50;
@@ -142,21 +142,22 @@ var changeDirection = function(barPosition, ballPosition, leftOperator) {
 
 Ball.prototype.checkForBricks = function(leftOperator, topOperator) {
 
-	var bricksList = this.bricks.bricksList;
+	var bricksList = Object.keys(this.bricks.bricksListMap);
+	var ballPosition = this.ball.getBoundingClientRect();
+
 	for(var brickCount = 0; brickCount < bricksList.length; brickCount++) {
-		var brick = bricksList[brickCount];
-		var brickObj = document.getElementById(brick.id);
-		if(!brickObj) 
-			continue;
-		var bricksPosition = brick.obj.getBoundingClientRect();
-		var ballPosition = this.ball.getBoundingClientRect();
-		var topCheck = ballPosition.top  > bricksPosition.top;
+		var brickId = bricksList[brickCount];		
+		var bricksPosition = this.bricks.getBrickPosition(brickId);		
+
+		var topCheck = ballPosition.top  > (bricksPosition.top + this.bricks.brickHeight);
+		var bottomCheck = (ballPosition.top + this.ballHeight) < bricksPosition.top;
 		var leftCheck = ballPosition.left + this.ballWidth < bricksPosition.left;
 		var rightCheck = ((ballPosition.left + ballPosition.right)/2 )> bricksPosition.right;
-		if(!topCheck && !leftCheck && !rightCheck) {
+
+		if(!topCheck && !bottomCheck && !leftCheck && !rightCheck) {
 			leftOperator = (leftOperator === '+')? '-': '+';
-			topOperator =  '+';
-			brick.obj.remove();
+			topOperator =  (topOperator === '+')? '-': '+';
+			this.bricks.removeBrick(brickId);
 			break;
 		}
 	}

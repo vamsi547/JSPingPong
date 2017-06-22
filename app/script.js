@@ -4,7 +4,7 @@ var eventEmitter  = new EventEmitter();
 
 var barObj 		  = new Bar('svgBar', container);
 var svgCreator    = new SVGCreator(container);
-var bricks        = new Bricks('svgBrick', container, { svgCreator: svgCreator });
+var bricks        = new Bricks('svgBrick', container, { 'svgCreator': svgCreator, 'eventEmitter': eventEmitter });
 var scoreObj 	  = new ScoreBoard('score', 'level', {'eventEmitter': eventEmitter});
 var ballObj 	  = new Ball('svgBall', 'audio', container, 
 					{
@@ -36,8 +36,7 @@ function getRandomInteger(min, max) {
 }
 
 function initBonusBar() {
-	// Adding return to stop Bonus ball - temporarily
-	return;
+	
 	clearTimeout(bonusInterval);
 	bonusInterval = setTimeout(function() {
 		if(isGameOver)			
@@ -109,7 +108,7 @@ function startNewGame() {
 }
 
 function gameOver() {
-	
+
 	isGameOver = true;
 
 	ballsList.forEach(function(ball) {

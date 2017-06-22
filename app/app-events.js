@@ -10,6 +10,7 @@ eventEmitter.on('level-up', function() {
 	var newBallObj = new Ball(ballId, 'audio', container, 
 					{
 						'barObj': barObj, 
+						'bricks': bricks,
 						'scoreObj': scoreObj, 
 						'eventEmitter': eventEmitter
 					}, ballAttrs);

@@ -2,7 +2,7 @@ var balls = [
 	{
 		// position
 		left : '0',
-		top : '0',
+		top : '300',
 		//dimensions - svg
 		height : 60,
 		width : 60,
@@ -17,7 +17,7 @@ var balls = [
 	{
 		// position
 		left : '30',
-		top : '0',
+		top : '300',
 		// dimensions - svg
 		height : 100,
 		width : 100,
@@ -32,7 +32,7 @@ var balls = [
 	{
 		// position
 		left : '50',
-		top : '0',
+		top : '300',
 		// dimensions - svg
 		height : 80,
 		width : 80,

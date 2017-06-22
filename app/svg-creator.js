@@ -36,8 +36,8 @@ SVGCreator.prototype.cloneBrick = function(id, attrs) {
 	var newSvgObject = this.cloneElement(id);
 	newSvgObject.style.display = 'block'
 	newSvgObject.style.left = attrs.left || 10;
-	newSvgObject.style['padding-left'] = attrs['padding-left'] || 10;
-
+	newSvgObject.style.top  = attrs.top || '20%';
+	
 	this.parent.appendChild(newSvgObject);
 	return newSvgObject.id;
 }
