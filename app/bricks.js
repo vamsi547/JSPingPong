@@ -13,13 +13,14 @@ function Bricks(brickId, container, deps) {
 Bricks.prototype.setup = function () {
 	this.brickWidth = 50;
 	this.brickHeight = 30;
-	this.firstLeft = 500;
+	this.firstLeft = 200;
 	this.marginLeft = 5;
-	this.firstTop = '30%'
+	this.firstTop = '20%'
 	this.bricksListMap = {};
-
-	for(var row = 0; row < 1; row ++) {
-		for(var i = 0; i < 1; i++) {
+	
+	var rows = 5, columns = 15;
+	for(var row = 0; row < rows; row ++) {
+		for(var i = 0; i < columns; i++) {
 			var attrs = {
 				left: (i === 0)? this.firstLeft : this.firstLeft + (i * (this.brickWidth + this.marginLeft)),
 				top: '' + (parseInt(this.firstTop) + row*5) + '%'
@@ -52,6 +53,7 @@ Bricks.prototype.removeBrick = function(id) {
 		delete this.bricksListMap[id];
 		// Check for level-up
 		if(Object.keys(this.bricksListMap).length === 0) {
+			debugger;
 			this.eventEmitter.emit('game-over');
 		}
 	}
