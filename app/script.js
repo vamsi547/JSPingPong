@@ -104,6 +104,8 @@ function startNewGame() {
 	
 	barObj.reset();
 
+	bricks.reset();
+
 	initBonusBar();
 }
 

@@ -115,6 +115,7 @@ eventEmitter.on('bonus-bar-miss', function() {
    - Reset Ball - Only first ball as Initial state is One Ball
    - Remove Bonus Balls if any
    - Reset Bar
+   - Reset Bricks to Level 1 State
    - Restart Bonus Bar
 */
 newGame.addEventListener('click', startNewGame);
