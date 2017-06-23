@@ -169,11 +169,12 @@ Ball.prototype.checkForBricks = function(leftOperator, topOperator) {
 }
 
 Ball.prototype.gameOver = function() {
-	this.clearBounceInterval(this.bounceInterval);
+	this.clearBounceInterval();
 }
 
-Ball.prototype.clearBounceInterval = function(interval) {
-	cancelAnimationFrame(interval || this.bounceInterval);
+Ball.prototype.clearBounceInterval = function() {
+	cancelAnimationFrame(this.bounceInterval);
+	this.bounceInterval = null;
 }
 
 Ball.prototype.reset = function() {

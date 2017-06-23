@@ -35,6 +35,11 @@ function getRandomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/*
+	- Initialtes timeout to create Bonus after 't' seconds
+	- Initialtes Bonus Bar with a random position
+*/
+
 function initBonusBar() {
 	
 	clearTimeout(bonusInterval);
@@ -43,7 +48,7 @@ function initBonusBar() {
 			return;
 		bonusBarId = svgCreator.cloneBonusBar('svgBonusBar');
 		var bonusBarLeft = bonusBarPosition[getRandomInteger(0, bonusBarPosition.length - 1)];
-		bonusBarObj = new BonusBar(bonusBarId, container, { 'barObj': barObj, 'eventEmitter': eventEmitter }, { 'left': bonusBarLeft});		
+		bonusBarObj = new BonusBar(bonusBarId, container, { 'barObj': barObj, 'eventEmitter': eventEmitter }, { 'left': bonusBarLeft});
 	}, 1000 * showBonusInterval);
 }
 
@@ -81,6 +86,19 @@ function stopBonusBallsOnGameOver() {
 	bonusBallObj.stopBonusBallsInterval();
 }
 
+/*
+   - Set isGameOver state as false
+   - Hide New Game Button	
+   - Reset Score board and levels
+   - Remove all the Balls and retain only primary ball
+   - Updates ballslist with primary ball
+   - Reset Ball - Only first ball as Initial state is One Ball
+   - Remove Bonus Balls if any
+   - Reset Bar
+   - Reset Bricks to Level 1 State
+   - Restart Bonus Bar
+*/
+
 function startNewGame() {
 	
 	isGameOver = false; 
@@ -108,6 +126,16 @@ function startNewGame() {
 
 	initBonusBar();
 }
+
+/*
+	- Set isGameOver state as true
+	- Stop the Balls	
+	- Stop the Bar
+	- Stop the Bonus Bar
+	- Stop the Bonus Balls
+	- Display New Game Button
+	- Blur the page - TODO
+*/
 
 function gameOver() {
 

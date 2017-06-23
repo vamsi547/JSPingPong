@@ -8,6 +8,10 @@ function BonusBalls(ballCount, interval, container, deps) {
 	this.setup();
 }
 
+/*
+	Initiates Bonus Ball Creation with 'ballCount' Balls
+	Ball gets created for every 'interval' seconds 
+*/
 BonusBalls.prototype.setup = function() {
 	this.ballsList = [];
 	var limit = this.ballCount;
@@ -27,6 +31,11 @@ BonusBalls.prototype.setup = function() {
 	}.bind(this), this.interval);
 }
 
+/*
+	Stops Bonus Ball creation
+	- when Bonus time out
+	- when Game over	
+*/
 BonusBalls.prototype.stopBonusBallsInterval = function() {
 	clearInterval(this.ballCreationInterval);
 	this.ballCreationInterval = null;
@@ -35,6 +44,10 @@ BonusBalls.prototype.stopBonusBallsInterval = function() {
 	});
 }
 
+/*
+	Removes Bonus ball of specified ballId
+	- when Bonus Ball miss
+*/
 BonusBalls.prototype.removeBonusBall = function(ballId) {
 	var ballIndexToRemove = -1;
 	this.ballsList.forEach(function(ball, index) {
@@ -51,7 +64,10 @@ BonusBalls.prototype.removeBonusBall = function(ballId) {
 	}
 	
 }
-
+/*
+	Remove all the Existing Bonus Balls 
+	- when Game restarts
+*/
 BonusBalls.prototype.removeAllBonusBalls = function() {
 	this.ballsList.forEach(function(ball) {
 		// Remove the Ball from DOM

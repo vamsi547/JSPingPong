@@ -125,7 +125,6 @@ newGame.addEventListener('click', startNewGame);
 	- Space bar => New Game
 	- ESC Key   => Stop Game
 */
-
 document.addEventListener('keydown', function(evt) {
 	if(evt.keyCode === 32 && isGameOver) {
 		startNewGame();

@@ -5,6 +5,10 @@ function ScoreBoard(scoreId, levelId, deps) {
 	this.initializeScoreBoard();
 }
 
+/*
+	Initiates Score Board with Default values 
+	- Setup of Leves Map with Increase in Score
+*/
 ScoreBoard.prototype.initializeScoreBoard = function() {
 	this.score = 0;
 	this.steps = 5;
@@ -19,6 +23,9 @@ ScoreBoard.prototype.initializeScoreBoard = function() {
 	this.updateLevel(true);
 }
 
+/*
+	Updates score based on the Level
+*/
 ScoreBoard.prototype.updateScore = function(initialize) {
 	if(!initialize)		
 		this.score += this.steps;
@@ -28,6 +35,10 @@ ScoreBoard.prototype.updateScore = function(initialize) {
 	this.scoreboard.textContent = this.score;
 }
 
+/*
+	Updates Level based on the Score
+	- For every 10 Powers of Score Level Increases by 1
+*/
 ScoreBoard.prototype.updateLevel = function(initialize) {
 	if(!initialize) 
 		this.level++;
@@ -38,6 +49,9 @@ ScoreBoard.prototype.updateLevel = function(initialize) {
 		this.eventEmitter.emit('level-up');
 }
 
+/*
+	Resets Score to Initial State
+*/
 ScoreBoard.prototype.reset = function() {
 	this.initializeScoreBoard();
 }

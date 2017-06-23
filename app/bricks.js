@@ -13,13 +13,13 @@ function Bricks(brickId, container, deps) {
 Bricks.prototype.setup = function () {
 	this.brickWidth = 50;
 	this.brickHeight = 30;
-	this.firstLeft = 200;
+	this.firstLeft = 500;
 	this.marginLeft = 5;
-	this.firstTop = '20%'
+	this.firstTop = '30%'
 	this.bricksListMap = {};
 
-	for(var row = 0; row < 5; row ++) {
-		for(var i = 0; i < 15; i++) {
+	for(var row = 0; row < 1; row ++) {
+		for(var i = 0; i < 1; i++) {
 			var attrs = {
 				left: (i === 0)? this.firstLeft : this.firstLeft + (i * (this.brickWidth + this.marginLeft)),
 				top: '' + (parseInt(this.firstTop) + row*5) + '%'

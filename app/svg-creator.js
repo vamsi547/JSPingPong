@@ -9,6 +9,9 @@ SVGCreator.prototype.cloneElement = function(id) {
 	return newSvgObject;
 }
 
+/*
+	Created Ball Object with specified attributes
+*/
 SVGCreator.prototype.cloneBall = function(attrs, id) {
 	var newSvgObject = this.cloneElement(id);
 
@@ -26,12 +29,18 @@ SVGCreator.prototype.cloneBall = function(attrs, id) {
 	return newSvgObject.id;	
 }
 
-SVGCreator.prototype.cloneBonusBar = function(id) {
+/*
+	Created Bonus Bar Object with specified attributes
+*/
+SVGCreator.prototype.cloneBonusBar = function(id, attrs) {
 	var newSvgObject = this.cloneElement(id);
 	this.parent.appendChild(newSvgObject);
 	return newSvgObject.id;
 }
 
+/*
+	Created Brick Object with specified attributes
+*/
 SVGCreator.prototype.cloneBrick = function(id, attrs) {
 	var newSvgObject = this.cloneElement(id);
 	newSvgObject.style.display = 'block'
@@ -42,6 +51,9 @@ SVGCreator.prototype.cloneBrick = function(id, attrs) {
 	return newSvgObject.id;
 }
 
+/*
+	Generates Random ID to assign for each DOM Object created
+*/
 SVGCreator.prototype.generateID = function() {
 	return Math.random().toString(36).substring(7);
-}	
+}

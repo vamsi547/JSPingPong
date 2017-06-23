@@ -9,8 +9,10 @@ function BonusBar(bonusBarId, container, deps, attrs) {
 	this.moveBonusBar();
 }
 
+/*
+	Initiates Bonus Bar with Specified attributes and Defaults
+*/
 BonusBar.prototype.setup = function() {
-	// Initialize Bonus Bar
 	this.bonusBar.style.display = 'block';
 	this.bonusBar.style.top = '0px';
 	this.bonusBar.style.left = this.attrs.left + 'px' || '10px';
@@ -21,6 +23,9 @@ BonusBar.prototype.setup = function() {
 	this.colors = ['red', 'blue', 'green', 'white'];
 }
 
+/*
+	Bonus Bar moves with random colors of (R,G,B,W)
+*/
 BonusBar.prototype.moveBonusBar = function() {
 	
 	function animateBonusBar() {
@@ -56,6 +61,11 @@ BonusBar.prototype.moveBonusBar = function() {
 
 }
 
+/*
+	Stops Movement of Bonus Bar
+	- On Game over
+	- On Bonus Miss/ Bonus Catch
+*/
 BonusBar.prototype.stopBonusMoveForwardInterval = function() {
 	cancelAnimationFrame(this.moveForwardInterval)
 }
