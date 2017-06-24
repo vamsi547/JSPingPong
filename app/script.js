@@ -1,18 +1,25 @@
-var container 	  = document.getElementById('container');
-var newGame 	  = document.getElementById('newgame')
-var eventEmitter  = new EventEmitter();
+var container 	  			= document.getElementById('container');
+var newGame 	  			= document.getElementById('newgame')
+var eventEmitter  			= new EventEmitter();
 
-var barObj 		  = new Bar('svgBar', container);
-var svgCreator    = new SVGCreator(container);
-var bricks        = new Bricks('svgBrick', container, { 'svgCreator': svgCreator, 'eventEmitter': eventEmitter });
-var scoreObj 	  = new ScoreBoard('score', 'level', {'eventEmitter': eventEmitter});
-var ballObj 	  = new Ball('svgBall', 'audio', container, 
-					{
-						'barObj': barObj, 
-						'bricks': bricks,
-						'scoreObj': scoreObj, 
-						'eventEmitter': eventEmitter
-					});
+var brickLevelConstructor 	= new BrickLevelConstructor();
+var barObj 		  			= new Bar('svgBar', container);
+var svgCreator    			= new SVGCreator(container);
+var scoreObj 	  			= new ScoreBoard('score', 'level', {'eventEmitter': eventEmitter});
+var bricks        			= new Bricks('svgBrick', container,
+								{ 
+									'svgCreator': svgCreator,
+									'eventEmitter': eventEmitter,
+									'scoreObj': scoreObj,
+									'brickLevelConstructor': brickLevelConstructor
+								});
+var ballObj 	  			= new Ball('svgBall', 'audio', container, 
+								{
+									'barObj': barObj, 
+									'bricks': bricks,
+									'scoreObj': scoreObj, 
+									'eventEmitter': eventEmitter
+								});
 
 var ballsList 	  = [{ id: 'svgBall', obj: ballObj }];
 

@@ -2,13 +2,17 @@ function Bricks(brickId, container, deps) {
 	this.brickId = brickId;
 	this.container = container;
 	this.svgCreator = deps.svgCreator;
-	this.eventEmitter = deps.eventEmitter
+	this.eventEmitter = deps.eventEmitter;
+	this.scoreObj = deps.scoreObj;
+	this.brickLevelConstructor = deps.brickLevelConstructor;
 	this.setup();
 }
+
 /*
 	Sets Bricks of 5 * 10 Layout for Level 1
 	- Default Height is 30px and Width is 50px
 	- Stores all the Bricks with Ids as a JSON
+	- Calls Brick Constructor with Default level
 */
 Bricks.prototype.setup = function () {
 	this.brickWidth = 50;
@@ -17,21 +21,13 @@ Bricks.prototype.setup = function () {
 	this.marginLeft = 5;
 	this.firstTop = '20%'
 	this.bricksListMap = {};
-	
-	var rows = 5, columns = 15;
-	for(var row = 0; row < rows; row ++) {
-		for(var i = 0; i < columns; i++) {
-			var attrs = {
-				left: (i === 0)? this.firstLeft : this.firstLeft + (i * (this.brickWidth + this.marginLeft)),
-				top: '' + (parseInt(this.firstTop) + row*5) + '%'
-			}
-			var createdBrickId = this.svgCreator.cloneBrick(this.brickId, attrs);
-			
-			this.bricksListMap[createdBrickId] = document.getElementById(createdBrickId);
-		}	
-	}	
 
+	this.brickLevelConstructor.getBrickConstructor(this.scoreObj.getInitialLevel()).call(this);	
 };
+
+Bricks.prototype.updateBricksForLevelUp = function() {
+	this.brickLevelConstructor.getBrickConstructor(this.scoreObj.getCurrentLevel()).call(this);		
+}
 
 /*
 	Returns Position of a specific brick associated with passed ID;
@@ -44,8 +40,7 @@ Bricks.prototype.getBrickPosition = function(id) {
 /*
 	Removes specified Brick of passed ID from the DOM and from the Brick Map
 */
-Bricks.prototype.removeBrick = function(id) {
-	
+Bricks.prototype.removeBrick = function(id) {	
 	if(id && this.bricksListMap[id]) {
 		// Remove Brick from DOM
 		this.bricksListMap[id].remove();
@@ -53,11 +48,9 @@ Bricks.prototype.removeBrick = function(id) {
 		delete this.bricksListMap[id];
 		// Check for level-up
 		if(Object.keys(this.bricksListMap).length === 0) {
-			debugger;
-			this.eventEmitter.emit('game-over');
+			this.eventEmitter.emit('level-up');
 		}
 	}
-
 }
 
 /*

@@ -1,23 +1,28 @@
 /* Event to Handle when level increases
+   - Increase Level 
    - Creates extra Ball for each level up with variant speeds and variant sizes
    - Increase Bar Speed for Every level Increase
+   - Construct Bricks for New level
    - Storing all Balls with their Ids and Objects
 */
 eventEmitter.on('level-up', function() {	
-
-	var ballAttrs = balls[getRandomInteger(0, balls.length - 1)];
-	var ballId = svgCreator.cloneBall(ballAttrs, 'svgBall');
-	var newBallObj = new Ball(ballId, 'audio', container, 
-					{
-						'barObj': barObj, 
-						'bricks': bricks,
-						'scoreObj': scoreObj, 
-						'eventEmitter': eventEmitter
-					}, ballAttrs);
-	
+	scoreObj.updateLevel();
+	setTimeout(function() {
+		var ballAttrs = balls[getRandomInteger(0, balls.length - 1)];
+		var ballId = svgCreator.cloneBall(ballAttrs, 'svgBall');
+		var newBallObj = new Ball(ballId, 'audio', container, 
+						{
+							'barObj': barObj, 
+							'bricks': bricks,
+							'scoreObj': scoreObj, 
+							'eventEmitter': eventEmitter
+						}, ballAttrs);
+		ballsList.push({ id: ballId, obj: newBallObj });
+	}, 3000);
 	barObj.increaseSpeed();
+	ballObj.increaseSpeed();
+	bricks.updateBricksForLevelUp();
 	
-	ballsList.push({ id: ballId, obj: newBallObj });
 });
 
 /* Event to handle when game ends
