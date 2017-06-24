@@ -21,6 +21,8 @@ Bar.prototype.setup = function() {
 
 	// keydown event 
 	this.keyDownEventListener();
+	// Mouse move event
+	this.mouseMoveEventListener();
 }
 
 Bar.prototype.getBarPosition = function() {
@@ -62,6 +64,20 @@ Bar.prototype.keyDownEventListener = function() {
 
 Bar.prototype.keyDownEventRemover = function() {
 	document.removeEventListener('keydown', this.moveBar);
+}
+
+Bar.prototype.mouseMoveEventListener = function() {
+	this.moveBarOnMouseMovement = function(e) {
+		var mousePoint = e.clientX;
+		var maxLeft = this.container.clientWidth - this.barLength;
+		this.bar.style.left = mousePoint > maxLeft ? maxLeft : mousePoint;
+	}.bind(this);
+	document.addEventListener("mousemove", this.moveBarOnMouseMovement, false);
+
+}
+
+Bar.prototype.mouseMoveEventRemover = function() {
+	document.removeEventListener('mousemove', this.moveBarOnMouseMovement);
 }
 
 Bar.prototype.increaseSpeed = function() {
@@ -108,6 +124,8 @@ Bar.prototype.restoreBar = function() {
 Bar.prototype.gameOver = function() {
 	// Bar stops moving on key stroke
 	this.keyDownEventRemover();
+	// Bar stops moving on Mouse movement
+	this.mouseMoveEventRemover();
 }
 
 Bar.prototype.reset = function() {

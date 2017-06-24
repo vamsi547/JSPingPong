@@ -25,7 +25,15 @@ Bricks.prototype.setup = function () {
 	this.brickLevelConstructor.getBrickConstructor(this.scoreObj.getInitialLevel()).call(this);	
 };
 
+/*
+	Updates Bricks shape based on current level
+	- Game over on level 3 as it is not yet supported ( Temporarary )
+*/
 Bricks.prototype.updateBricksForLevelUp = function() {
+	if(this.scoreObj.getCurrentLevel() > 2) {
+		this.eventEmitter.emit('game-over');
+		return;
+	}
 	this.brickLevelConstructor.getBrickConstructor(this.scoreObj.getCurrentLevel()).call(this);		
 }
 

@@ -12,6 +12,14 @@ BrickLevelConstructor.prototype.getBrickConstructor = function(level) {
 	return level && this.bricksToLevelMap[level];
 }
 
+/* - Shape : 5 * 10
+
+	***         ***
+	***         ***
+	***         ***
+	***         ***
+	***************
+*/
 function level1Bricks() {
 	var rows = 5, columns = 15;
 	for(var row = 0; row < rows; row ++) {
@@ -30,6 +38,15 @@ function level1Bricks() {
 	}
 }
 
+/*
+	- Shape : 5 * 10
+	
+	***************
+	***         ***
+	***         ***
+	***         ***
+	***         ***	
+*/
 function level2Bricks() {
 	var rows = 5, columns = 15;
 	for(var row = 0; row < rows; row ++) {
